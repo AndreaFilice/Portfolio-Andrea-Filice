@@ -1,13 +1,10 @@
-# .github/workflows/deploy-pages.yml
 name: Deploy GitHub Pages
 
-# Trigger: ad ogni push su main (modificalo se usi un'altra branch)
 on:
   push:
     branches:
       - main
 
-# Permessi necessari per leggere contenuti, gestire Pages e creare ID token (per repo private)
 permissions:
   contents: read
   pages: write
@@ -18,35 +15,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Controlla il codice
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. (Opzionale) Setup Node.js se il sito è basato su Node
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'          # Modifica in base alla tua versione
+          node-version: '22'          
 
-      # 3. Installa dipendenze e build
       - name: Install dependencies
         run: npm ci
 
       - name: Build static site
-        run: npm run build           # Modifica in base allo script di build del tuo progetto
+        run: npm run build           
 
-      # 4. Abilita/configura GitHub Pages (crea il site se non esiste)
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
-          enablement: 'true'         # forza la creazione automatica del sito
+          enablement: 'true'
 
-      # 5. Carica i file statici come artefatto
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: './build'            # cartella con i file generati dal build
+          path: './build'           
 
-      # 6. Pubblica su GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
