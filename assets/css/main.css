@@ -1458,3 +1458,11 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+#anim:hover{
+  cursor: pointer;
+}
+
+#anim::after{
+  cursor: default;
+}
